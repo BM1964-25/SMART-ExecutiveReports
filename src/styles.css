@@ -67,6 +67,7 @@ button:hover {
   height: 100dvh;
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
   transition: grid-template-columns 160ms ease;
   overflow: hidden;
 }
@@ -79,18 +80,16 @@ button:hover {
   background: #10243a;
   color: #ffffff;
   padding: 22px 18px;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 0;
   overflow-y: auto;
   z-index: 20;
 }
 
 .app-frame {
   min-width: 0;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 0;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
 }
 
@@ -238,17 +237,81 @@ button:hover {
 }
 
 .app-footer {
-  min-height: 38px;
-  padding: 8px 32px;
-  display: flex;
+  grid-column: 1 / -1;
+  min-height: 88px;
+  padding: 22px 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   justify-content: space-between;
-  gap: 18px;
+  gap: 28px;
   align-items: center;
   border-top: 1px solid var(--line);
   background: #ffffff;
   color: var(--muted);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.footer-mark {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #ffffff;
+  background: #10243a;
+  border-radius: 6px;
+  flex: 0 0 auto;
+}
+
+.footer-brand strong,
+.footer-brand span {
+  display: block;
+}
+
+.footer-brand strong {
+  color: var(--ink);
+}
+
+.footer-brand span {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.footer-legal {
+  display: grid;
+  gap: 7px;
+  justify-items: end;
+  text-align: right;
   font-size: 12px;
-  font-weight: 700;
+  line-height: 1.45;
+}
+
+.footer-legal p {
+  margin: 0;
+}
+
+.footer-legal nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.footer-legal a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.footer-legal a:hover {
+  text-decoration: underline;
 }
 
 .section-head {
@@ -957,6 +1020,7 @@ figcaption span {
 
   .app-shell {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     height: auto;
     min-height: 100vh;
     overflow: visible;
@@ -1022,9 +1086,26 @@ figcaption span {
 
   .app-footer {
     min-height: 0;
-    padding: 10px 18px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    padding: 24px 18px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+
+  .footer-brand {
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-legal {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer-legal nav {
+    justify-content: center;
   }
 
   .report-card {

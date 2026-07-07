@@ -528,8 +528,7 @@ function App() {
           <div className="brand">
             <div className="brand-mark">S</div>
             <div className="brand-copy">
-            <strong>{APP_NAME}</strong>
-            <span>BuiltSmart AI</span>
+              <strong>{APP_NAME}</strong>
             </div>
           </div>
           <button className="collapse-button" title={sidebarCollapsed ? "Sidebar ausklappen" : "Sidebar einklappen"} onClick={() => setSidebarCollapsed((value) => !value)}>
@@ -591,12 +590,28 @@ function App() {
           </div>
         </main>
 
-        <footer className="app-footer">
-          <span>{APP_NAME}</span>
-          <span>{activeReport.reportType}</span>
-          <span>Zuletzt bearbeitet: {activeReport.lastEdited}</span>
-        </footer>
       </div>
+      <footer className="app-footer">
+        <div className="footer-brand">
+          <div className="footer-mark">S</div>
+          <div>
+            <strong>{APP_NAME}</strong>
+            <span>Professionelle Executive Reports für Bauprojekte, Management und Steuerung.</span>
+          </div>
+        </div>
+        <div className="footer-legal">
+          <p>© 2026 SmartBuilt-AI · Powered by BuiltSmart Hub - Bernhard Metzger</p>
+          <nav aria-label="Rechtliche Links">
+            <a href="https://www.built-smart-hub.com/impressum" target="_blank" rel="noreferrer">Impressum</a>
+            <span>|</span>
+            <a href="https://www.built-smart-hub.com/datenschutz" target="_blank" rel="noreferrer">Datenschutz</a>
+            <span>|</span>
+            <a href="https://www.built-smart-hub.com/agb" target="_blank" rel="noreferrer">AGB</a>
+            <span>|</span>
+            <a href="https://www.built-smart-hub.com/widerrufbelehrung" target="_blank" rel="noreferrer">Widerrufbelehrung</a>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 }

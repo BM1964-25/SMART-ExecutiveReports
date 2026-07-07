@@ -66,7 +66,7 @@ button:hover {
   height: 100vh;
   height: 100dvh;
   display: grid;
-  grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-columns: 300px minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   transition: grid-template-columns 160ms ease;
   overflow: hidden;
@@ -236,12 +236,12 @@ button:hover {
 .backup-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 10px;
 }
 
 .backup-actions button {
   min-height: 42px;
-  padding: 0 10px;
+  padding: 0 12px;
   border: 1px solid #dbe1e8;
   background: #ffffff;
   color: #243044;

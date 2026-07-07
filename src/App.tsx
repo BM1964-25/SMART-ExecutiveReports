@@ -803,6 +803,9 @@ function App() {
           <button className={view === "api" ? "active" : ""} title="API-Schlüssel" onClick={() => setView("api")}>
             <KeyRound size={18} /> <span>API-Schlüssel</span>
           </button>
+          <button title="Hilfe" onClick={() => setHelpOpen(true)}>
+            <HelpCircle size={18} /> <span>Hilfe</span>
+          </button>
         </nav>
         <div className="sidebar-bottom">
           <button

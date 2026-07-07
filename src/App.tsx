@@ -768,6 +768,25 @@ function App() {
 
   return (
     <div className={`app-shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
+      <header className="topbar">
+        <div>
+          <p className="eyebrow">{APP_NAME}</p>
+          <h1>{activeReport.projectName}</h1>
+          <span className="report-type-line">{activeReport.reportType}</span>
+        </div>
+        <div className="actions">
+          <button onClick={() => setHelpOpen(true)}>
+            <HelpCircle size={16} /> Hilfe
+          </button>
+          <button onClick={addReport}>
+            <Plus size={16} /> Neuer Bericht
+          </button>
+          <button onClick={() => setView("preview")}>
+            <FileText size={16} /> Vorschau
+          </button>
+        </div>
+      </header>
+
       <aside className="sidebar">
         <div className="sidebar-head">
           <div className="brand">
@@ -837,25 +856,6 @@ function App() {
       </aside>
 
       <div className="app-frame">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">{APP_NAME}</p>
-            <h1>{activeReport.projectName}</h1>
-            <span className="report-type-line">{activeReport.reportType}</span>
-          </div>
-          <div className="actions">
-            <button onClick={() => setHelpOpen(true)}>
-              <HelpCircle size={16} /> Hilfe
-            </button>
-            <button onClick={addReport}>
-              <Plus size={16} /> Neuer Bericht
-            </button>
-            <button onClick={() => setView("preview")}>
-              <FileText size={16} /> Vorschau
-            </button>
-          </div>
-        </header>
-
         <main className="workspace-scroll">
           <div className="workspace">
             {view === "dashboard" && (

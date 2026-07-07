@@ -77,13 +77,13 @@ button:hover {
 }
 
 .sidebar {
-  background: #f8fafc;
-  color: var(--ink);
-  padding: 22px 14px;
+  background: #1f365c;
+  color: #f8fafc;
+  padding: 24px 14px;
   min-height: 0;
   overflow-y: auto;
   z-index: 20;
-  border-right: 1px solid var(--line);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
 }
@@ -99,7 +99,7 @@ button:hover {
 .sidebar-head {
   display: grid;
   gap: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
   padding: 0 6px;
 }
 
@@ -113,12 +113,12 @@ button:hover {
 .brand-mark {
   width: 40px;
   height: 40px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   display: grid;
   place-items: center;
   font-weight: 800;
-  color: #ffffff;
-  background: #10243a;
+  color: #1f365c;
+  background: #f8fafc;
   border-radius: 10px;
 }
 
@@ -132,40 +132,59 @@ button:hover {
   min-width: 0;
 }
 
+.brand strong {
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
 .collapse-button {
   width: 100%;
   justify-content: flex-start;
-  min-height: 42px;
+  min-height: 44px;
   background: transparent;
   border-color: transparent;
-  color: #536174;
-  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0 13px;
   font-weight: 700;
+}
+
+.collapse-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: transparent;
+  color: #f8fafc;
 }
 
 .sidebar nav {
   display: grid;
-  gap: 10px;
+  gap: 9px;
   flex: 1;
   align-content: start;
 }
 
-.sidebar button {
+.sidebar nav button {
   width: 100%;
   justify-content: flex-start;
   background: transparent;
   border-color: transparent;
-  color: #46556a;
-  min-height: 42px;
-  border-radius: 10px;
-  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.78);
+  min-height: 44px;
+  border-radius: 11px;
+  padding: 0 13px;
   font-weight: 700;
+  font-size: 14px;
 }
 
-.sidebar button.active,
-.sidebar button:hover {
-  background: #eef2f6;
-  color: var(--ink);
+.sidebar nav button svg,
+.collapse-button svg {
+  color: #e5e7eb;
+  flex: 0 0 auto;
+}
+
+.sidebar nav button.active,
+.sidebar nav button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  border-color: transparent;
 }
 
 .sidebar-collapsed .sidebar {
@@ -179,11 +198,12 @@ button:hover {
 .sidebar-collapsed .brand-copy,
 .sidebar-collapsed .sidebar nav span,
 .sidebar-collapsed .collapse-button span,
-.sidebar-collapsed .sidebar-info {
+.sidebar-collapsed .sidebar-card {
   display: none;
 }
 
-.sidebar-collapsed .sidebar button {
+.sidebar-collapsed .sidebar nav button,
+.sidebar-collapsed .collapse-button {
   justify-content: center;
   padding: 0;
 }
@@ -191,29 +211,118 @@ button:hover {
 .sidebar-bottom {
   display: grid;
   gap: 14px;
-  padding-top: 22px;
-  margin-top: 22px;
-  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.sidebar-info {
-  border: 1px solid var(--line);
-  background: #ffffff;
+.sidebar-card {
+  border: 1px solid #dce3ec;
+  background: #f8fafc;
   border-radius: 12px;
-  padding: 12px;
+  padding: 14px;
   display: grid;
-  gap: 4px;
+  gap: 12px;
+  color: var(--ink);
 }
 
-.sidebar-info span {
+.sidebar-card h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.backup-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.backup-actions button {
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid #dbe1e8;
+  background: #ffffff;
+  color: #243044;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 6px;
+}
+
+.backup-actions button:hover {
+  border-color: #b9c5d3;
+  background: #f6f8fb;
+}
+
+.backup-card p {
+  margin: 0;
   color: var(--muted);
   font-size: 12px;
+  line-height: 1.45;
+}
+
+.backup-input {
+  display: none;
+}
+
+.system-card dl {
+  margin: 0;
+  display: grid;
+}
+
+.system-card div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid #e6ebf1;
+}
+
+.system-card div:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.system-card div:last-child {
+  padding-bottom: 0;
+}
+
+.system-card dt,
+.system-card dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.system-card dt {
+  color: var(--muted);
   font-weight: 700;
 }
 
-.sidebar-info strong {
-  color: var(--green);
-  font-size: 14px;
+.system-card dd {
+  color: #243044;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.green {
+  background: var(--green);
+}
+
+.status-dot.blue {
+  background: var(--blue);
 }
 
 .workspace {
@@ -1080,20 +1189,14 @@ figcaption span {
     overflow: visible;
   }
 
-  .sidebar-collapsed .brand-copy,
-  .sidebar-collapsed .sidebar nav span,
-  .sidebar-collapsed .collapse-button span,
-  .sidebar-collapsed .sidebar-info {
-    display: block;
-  }
-
   .sidebar-collapsed .brand {
     justify-content: flex-start;
   }
 
-  .sidebar-collapsed .sidebar button {
-    justify-content: flex-start;
-    padding: 0 12px;
+  .sidebar-collapsed .sidebar nav button,
+  .sidebar-collapsed .collapse-button {
+    justify-content: center;
+    padding: 0;
   }
 
   .sidebar nav {

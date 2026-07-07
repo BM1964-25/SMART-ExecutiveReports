@@ -32,8 +32,9 @@ import {
   Save,
   Trash2,
   Unplug,
+  Upload,
 } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type Status = "green" | "yellow" | "red";
 type ReportType =
@@ -469,6 +470,7 @@ const normalizeReports = (items: Partial<Report>[]): Report[] =>
   });
 
 function App() {
+  const restoreInputRef = useRef<HTMLInputElement | null>(null);
   const [reports, setReports] = useState<Report[]>(() => {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? normalizeReports(JSON.parse(raw) as Partial<Report>[]) : [createReport(1)];
@@ -519,6 +521,39 @@ function App() {
     if (id === activeId) setActiveId(remaining[0]?.id ?? "");
   };
 
+  const exportLibrary = () => {
+    const payload = {
+      app: APP_NAME,
+      exportedAt: new Date().toISOString(),
+      reports,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `smart-executive-reports-${today()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const restoreLibrary = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    try {
+      const parsed = JSON.parse(await file.text()) as Partial<Report>[] | { reports?: Partial<Report>[] };
+      const importedReports = Array.isArray(parsed) ? parsed : parsed.reports;
+      if (!Array.isArray(importedReports)) throw new Error("Die Datei enthält keine Berichtsbibliothek.");
+      const normalized = normalizeReports(importedReports);
+      setReports(normalized.length ? normalized : [createReport(1)]);
+      setActiveId(normalized[0]?.id ?? "");
+      setView("dashboard");
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Die Sicherungsdatei konnte nicht gelesen werden.");
+    }
+  };
+
   if (!activeReport) return null;
 
   return (
@@ -533,16 +568,16 @@ function App() {
           </div>
         </div>
         <nav>
-          <button className={view === "dashboard" ? "active" : ""} onClick={() => setView("dashboard")}>
+          <button className={view === "dashboard" ? "active" : ""} title="Dashboard" onClick={() => setView("dashboard")}>
             <FileText size={18} /> <span>Dashboard</span>
           </button>
-          <button className={view === "editor" ? "active" : ""} onClick={() => setView("editor")}>
+          <button className={view === "editor" ? "active" : ""} title="Editor" onClick={() => setView("editor")}>
             <Save size={18} /> <span>Editor</span>
           </button>
-          <button className={view === "preview" ? "active" : ""} onClick={() => setView("preview")}>
+          <button className={view === "preview" ? "active" : ""} title="Vorschau" onClick={() => setView("preview")}>
             <Printer size={18} /> <span>Vorschau</span>
           </button>
-          <button className={view === "api" ? "active" : ""} onClick={() => setView("api")}>
+          <button className={view === "api" ? "active" : ""} title="API-Schlüssel" onClick={() => setView("api")}>
             <KeyRound size={18} /> <span>API-Schlüssel</span>
           </button>
         </nav>
@@ -556,9 +591,37 @@ function App() {
             {sidebarCollapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
             {!sidebarCollapsed && <span>Einklappen</span>}
           </button>
-          <div className="sidebar-info">
-            <span>Systemstatus</span>
-            <strong>Bereit</strong>
+          <div className="sidebar-card backup-card">
+            <h3>Datensicherung</h3>
+            <div className="backup-actions">
+              <button type="button" onClick={exportLibrary}>
+                <Download size={16} />
+                Sichern
+              </button>
+              <button type="button" onClick={() => restoreInputRef.current?.click()}>
+                <Upload size={16} />
+                Wiederherstellen
+              </button>
+            </div>
+            <p>Komplette Bibliothek als JSON sichern oder wiederherstellen.</p>
+            <input ref={restoreInputRef} className="backup-input" type="file" accept="application/json,.json" onChange={restoreLibrary} />
+          </div>
+          <div className="sidebar-card system-card">
+            <h3>Systemstatus</h3>
+            <dl>
+              <div>
+                <dt>Lizenz</dt>
+                <dd>Aktiv</dd>
+              </div>
+              <div>
+                <dt>KI</dt>
+                <dd><span className="status-dot green" /> KI aktiv</dd>
+              </div>
+              <div>
+                <dt>Speicher</dt>
+                <dd><span className="status-dot blue" /> Browser-Speicher</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </aside>

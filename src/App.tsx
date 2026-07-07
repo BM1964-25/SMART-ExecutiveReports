@@ -552,7 +552,7 @@ function App() {
         </nav>
       </aside>
 
-      <main className="workspace">
+      <div className="app-frame">
         <header className="topbar">
           <div>
             <p className="eyebrow">{APP_NAME}</p>
@@ -569,24 +569,34 @@ function App() {
           </div>
         </header>
 
-        {view === "dashboard" && (
-          <Dashboard
-            reports={reports}
-            activeId={activeReport.id}
-            onOpen={(id) => {
-              setActiveId(id);
-              setView("editor");
-            }}
-            onDuplicate={(report) => duplicateReport(report)}
-            onFollowUp={(report) => duplicateReport(report, true)}
-            onDelete={deleteReport}
-            onCreate={addReport}
-          />
-        )}
-        {view === "editor" && <Editor report={activeReport} onChange={updateReport} onNestedChange={updateNested} />}
-        {view === "preview" && <ReportPreview report={activeReport} />}
-        {view === "api" && <ApiSettings />}
-      </main>
+        <main className="workspace-scroll">
+          <div className="workspace">
+            {view === "dashboard" && (
+              <Dashboard
+                reports={reports}
+                activeId={activeReport.id}
+                onOpen={(id) => {
+                  setActiveId(id);
+                  setView("editor");
+                }}
+                onDuplicate={(report) => duplicateReport(report)}
+                onFollowUp={(report) => duplicateReport(report, true)}
+                onDelete={deleteReport}
+                onCreate={addReport}
+              />
+            )}
+            {view === "editor" && <Editor report={activeReport} onChange={updateReport} onNestedChange={updateNested} />}
+            {view === "preview" && <ReportPreview report={activeReport} />}
+            {view === "api" && <ApiSettings />}
+          </div>
+        </main>
+
+        <footer className="app-footer">
+          <span>{APP_NAME}</span>
+          <span>{activeReport.reportType}</span>
+          <span>Zuletzt bearbeitet: {activeReport.lastEdited}</span>
+        </footer>
+      </div>
     </div>
   );
 }

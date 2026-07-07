@@ -769,10 +769,12 @@ function App() {
   return (
     <div className={`app-shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
       <header className="topbar">
-        <div>
-          <p className="eyebrow">{APP_NAME}</p>
-          <h1>{activeReport.projectName}</h1>
-          <span className="report-type-line">{activeReport.reportType}</span>
+        <div className="header-brand">
+          <div className="brand-mark">S</div>
+          <div className="brand-copy">
+            <strong>{APP_NAME}</strong>
+            <span>BuiltSmart AI</span>
+          </div>
         </div>
         <div className="actions">
           <button onClick={() => setHelpOpen(true)}>
@@ -788,14 +790,6 @@ function App() {
       </header>
 
       <aside className="sidebar">
-        <div className="sidebar-head">
-          <div className="brand">
-            <div className="brand-mark">S</div>
-            <div className="brand-copy">
-              <strong>{APP_NAME}</strong>
-            </div>
-          </div>
-        </div>
         <nav>
           <button className={view === "dashboard" ? "active" : ""} title="Dashboard" onClick={() => setView("dashboard")}>
             <FileText size={18} /> <span>Dashboard</span>
@@ -858,6 +852,13 @@ function App() {
       <div className="app-frame">
         <main className="workspace-scroll">
           <div className="workspace">
+            <div className="workspace-title">
+              <div>
+                <p className="eyebrow">{activeReport.reportType}</p>
+                <h1>{activeReport.projectName}</h1>
+              </div>
+              <span>Zuletzt bearbeitet: {activeReport.lastEdited}</span>
+            </div>
             {view === "dashboard" && (
               <Dashboard
                 reports={reports}

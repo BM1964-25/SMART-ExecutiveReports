@@ -235,17 +235,18 @@ button:hover {
 
 .backup-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .backup-actions button {
-  min-height: 42px;
-  padding: 0 12px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 14px;
   border: 1px solid #dbe1e8;
   background: #ffffff;
   color: #243044;
-  border-radius: 11px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 800;
   gap: 6px;

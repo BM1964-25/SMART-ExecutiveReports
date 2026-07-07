@@ -22,6 +22,7 @@ import {
   EyeOff,
   FilePlus2,
   FileText,
+  HelpCircle,
   KeyRound,
   Loader2,
   PanelLeftClose,
@@ -145,6 +146,16 @@ type SectionNarrative = {
   generated: string;
 };
 
+type HelpChapter = {
+  id: string;
+  title: string;
+  body: Array<{
+    heading?: string;
+    paragraphs?: string[];
+    bullets?: string[];
+  }>;
+};
+
 type Report = {
   id: string;
   reportType: ReportType;
@@ -261,6 +272,204 @@ const uid = () => crypto.randomUUID();
 const formatEuro = (value: number) =>
   new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value || 0);
 const parseEuro = (value: string) => Number(value.replace(/[^\d,-]/g, "").replace(",", ".")) || 0;
+
+const helpChapters: HelpChapter[] = [
+  {
+    id: "overview",
+    title: "Überblick",
+    body: [
+      {
+        paragraphs: [
+          "SMART Executive Reports erstellt professionelle Projekt-, Management- und Executive-Reports mit einem einheitlichen Editor. Die App ist für Bauprojekte, Lenkungsausschüsse, Investoren, Banken, Behörden und Managementberichte ausgelegt.",
+          "Die App kann ohne KI genutzt werden. Alle strukturierten Berichtsdaten, Tabellen, Statuswerte, Vorschau und JSON-Datensicherung funktionieren lokal im Browser.",
+        ],
+      },
+      {
+        heading: "Ohne KI nutzbar",
+        bullets: [
+          "Berichte anlegen, duplizieren und fortschreiben",
+          "Kopfdaten, Termine, Kosten, Risiken, Qualität und Entscheidungen erfassen",
+          "Vorschau öffnen und Berichtsdaten prüfen",
+          "Berichtsbibliothek als JSON sichern und wiederherstellen",
+        ],
+      },
+    ],
+  },
+  {
+    id: "setup",
+    title: "Einrichtung & Zugang",
+    body: [
+      {
+        heading: "Lizenzschlüssel aktivieren",
+        paragraphs: [
+          "Der Lizenzschlüssel wird im vorgesehenen Lizenzbereich der jeweiligen BuiltSmart-AI-App eingegeben, sofern die App lizenzpflichtig ausgeliefert wird. Er muss aktiviert werden, bevor geschützte App-Funktionen genutzt werden können.",
+          "Der Lizenzschlüssel schaltet die App-Nutzung frei. Er bestätigt, dass Sie berechtigt sind, die Software zu verwenden. Der Lizenzschlüssel ersetzt keinen API-Key.",
+        ],
+      },
+      {
+        heading: "API-Key erstellen",
+        bullets: [
+          "Anthropic Console öffnen.",
+          "Konto erstellen oder einloggen.",
+          "Bereich „API Keys“ öffnen.",
+          "Neuen API-Key erstellen.",
+          "API-Key kopieren.",
+          "API-Key in der App unter „API-Schlüssel“ eintragen.",
+          "Hinweis: Der API-Key wird häufig nur einmal vollständig angezeigt und sollte sicher gespeichert werden.",
+        ],
+      },
+      {
+        heading: "Warum ein API-Key erforderlich ist",
+        paragraphs: [
+          "Die App nutzt KI-Funktionen über die Anthropic API. Der API-Key verbindet die App mit Ihrem persönlichen Anthropic-Konto. KI-Anfragen werden dadurch Ihrem eigenen Anthropic-Konto zugeordnet.",
+          "Ohne API-Key können KI-Funktionen nicht ausgeführt werden. Die manuelle Berichtserstellung bleibt weiterhin möglich.",
+        ],
+      },
+      {
+        heading: "Warum auch bei bezahltem App-Abo ein API-Key nötig ist",
+        paragraphs: [
+          "App-Lizenz bzw. App-Abo und KI-Nutzung sind getrennt. Die App-Lizenz bezahlt die Nutzung der Software. Die Anthropic API-Nutzung wird separat über das Anthropic-Konto des Nutzers verarbeitet bzw. abgerechnet.",
+          "Lizenzschlüssel und API-Key erfüllen unterschiedliche Aufgaben: Der Lizenzschlüssel aktiviert die Nutzung dieser App. Er bestätigt, dass Sie berechtigt sind, die Software zu verwenden. Der API-Key verbindet die App mit Ihrem Anthropic-Konto. Er ist erforderlich, damit KI-Funktionen ausgeführt werden können. Auch bei einer bezahlten App-Lizenz wird ein eigener API-Key benötigt, weil die Nutzung der KI-Modelle technisch und abrechnungstechnisch getrennt über Anthropic erfolgt.",
+        ],
+      },
+      {
+        heading: "Warum Anthropic verwendet wird",
+        paragraphs: [
+          "Anthropic wurde gewählt, weil Claude-Modelle stark bei strukturiertem Arbeiten, Textanalyse, Zusammenfassungen und professionellen Workflows sind. Claude eignet sich gut für längere Dokumente, komplexe Eingaben und nachvollziehbare Ausgaben.",
+          "Anthropic legt großen Wert auf Sicherheit, Zuverlässigkeit und verantwortungsvolle KI-Nutzung. Die API ermöglicht eine stabile Integration in professionelle Anwendungen. Der Nutzer behält über den eigenen API-Key Kontrolle über Nutzung und Abrechnung.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "quickstart",
+    title: "Schnellstart",
+    body: [
+      {
+        bullets: [
+          "Lizenzschlüssel aktivieren, falls die ausgelieferte Version eine Lizenzprüfung nutzt.",
+          "API-Key unter „API-Schlüssel“ eintragen, wenn KI-Funktionen verwendet werden sollen.",
+          "Im Dashboard einen neuen Bericht erstellen oder einen bestehenden Bericht öffnen.",
+          "Kopfdaten, Status, Termine, Kosten, Risiken und Entscheidungen erfassen.",
+          "Optional KI-Texte oder Abschnittstexte generieren.",
+          "Ergebnis in der Vorschau prüfen und Berichtsdaten weiterverwenden oder per JSON sichern.",
+        ],
+      },
+      {
+        paragraphs: ["Details zur Lizenz und zum API-Key finden Sie im Kapitel „Einrichtung & Zugang“."],
+      },
+    ],
+  },
+  {
+    id: "interface",
+    title: "Bedienoberfläche",
+    body: [
+      {
+        bullets: [
+          "Dashboard: Übersicht über alle gespeicherten Berichte.",
+          "Editor: zentrale Bearbeitung aller Berichtsdaten.",
+          "Vorschau: lesbare Berichtsdarstellung zur Prüfung.",
+          "API-Schlüssel: Anthropic API-Key speichern, prüfen und Verbindung trennen.",
+          "Sidebar: Navigation, Datensicherung, Systemstatus und Einklappfunktion.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "features",
+    title: "Wichtige Funktionen",
+    body: [
+      {
+        bullets: [
+          "Mehrere Berichtstypen wie Statusbericht, Management Report, Lenkungsausschussbericht, Monatsbericht, Quartalsbericht, ESG-Bericht, Revisionsbericht, Claim Report und weitere.",
+          "Einheitlicher Editor für alle Berichtstypen.",
+          "Strukturierte Erfassung von Kosten, Terminen, Risiken, Qualität, Entscheidungen, Ressourcen, Vertragsthemen und Anhängen.",
+          "Abschnittsweise Felder für Stichpunkte / Management-Kommentar und generierten Berichtstext.",
+          "Lokale JSON-Datensicherung und Wiederherstellung der Berichtsbibliothek.",
+        ],
+      },
+      {
+        heading: "Optional unterstützte KI-Aufgaben",
+        bullets: [
+          "Management Summary erstellen",
+          "Executive Summary erstellen",
+          "Abschnittstexte formulieren",
+          "Risiken ableiten",
+          "Maßnahmen vorschlagen",
+          "Widersprüche erkennen",
+          "Änderungen zum Vorbericht formulieren",
+          "Professionelle Formulierungen für Berichtstexte erzeugen",
+        ],
+      },
+    ],
+  },
+  {
+    id: "workflow",
+    title: "Typischer Workflow",
+    body: [
+      {
+        bullets: [
+          "Berichtstyp auswählen und Kopfdaten erfassen.",
+          "Statuswerte und tabellarische Daten aktualisieren.",
+          "Management-Kommentare als Stichpunkte pro Abschnitt ergänzen.",
+          "Optional KI-generierte Abschnittstexte erzeugen und fachlich prüfen.",
+          "Vorschau öffnen und Bericht auf Konsistenz prüfen.",
+          "Bericht fortschreiben, duplizieren oder als JSON sichern.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "data",
+    title: "Eingaben & Daten",
+    body: [
+      {
+        paragraphs: [
+          "Die Daten werden im Browser gespeichert. Die JSON-Datensicherung exportiert die komplette Berichtsbibliothek und kann später wieder eingelesen werden.",
+          "Der Anthropic API-Key wird lokal im Browser gespeichert. Behandeln Sie ihn wie ein Passwort und geben Sie ihn nicht an unberechtigte Personen weiter.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "results",
+    title: "Ergebnisse verstehen",
+    body: [
+      {
+        paragraphs: [
+          "Generierte Texte sind Entwürfe. Prüfen Sie alle Angaben, Termine, Kosten, Risiken und Empfehlungen fachlich, bevor sie in einem offiziellen Bericht verwendet werden.",
+          "Statusfarben und Kennzahlen basieren auf den eingegebenen Daten. KI-Texte dürfen keine erfundenen Fakten enthalten und sollten nur vorhandene Daten interpretieren.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "errors",
+    title: "Fehler & Lösungen",
+    body: [
+      {
+        bullets: [
+          "KI-Verbindung schlägt fehl: API-Key prüfen, Verbindung erneut testen und sicherstellen, dass das Anthropic-Konto API-Nutzung erlaubt.",
+          "KI-Text fehlt: API-Key speichern oder Abschnitt erneut generieren.",
+          "Import schlägt fehl: Nur gültige JSON-Sicherungen dieser App verwenden.",
+          "Daten fehlen nach Browserwechsel: JSON-Sicherung aus dem bisherigen Browser exportieren und im neuen Browser wiederherstellen.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "version",
+    title: "Version & Hinweise",
+    body: [
+      {
+        paragraphs: [
+          "Diese Hilfe gilt für SMART Executive Reports. Die App ist als Browser-Anwendung aufgebaut und speichert Daten lokal im verwendeten Browser.",
+          "Empfehlung: Vor größeren Änderungen regelmäßig eine JSON-Datensicherung erstellen.",
+        ],
+      },
+    ],
+  },
+];
 
 const emptySections = (): Record<SectionKey, boolean> => ({
   header: true,
@@ -478,6 +687,7 @@ function App() {
   const [activeId, setActiveId] = useState(reports[0]?.id ?? "");
   const [view, setView] = useState<"dashboard" | "editor" | "preview" | "api">("dashboard");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const activeReport = reports.find((report) => report.id === activeId) ?? reports[0];
 
@@ -634,6 +844,9 @@ function App() {
             <span className="report-type-line">{activeReport.reportType}</span>
           </div>
           <div className="actions">
+            <button onClick={() => setHelpOpen(true)}>
+              <HelpCircle size={16} /> Hilfe
+            </button>
             <button onClick={addReport}>
               <Plus size={16} /> Neuer Bericht
             </button>
@@ -687,6 +900,87 @@ function App() {
           </nav>
         </div>
       </footer>
+      {helpOpen && <HelpPanel chapters={helpChapters} onClose={() => setHelpOpen(false)} />}
+    </div>
+  );
+}
+
+function HelpPanel({ chapters, onClose }: { chapters: HelpChapter[]; onClose: () => void }) {
+  const [activeId, setActiveId] = useState(chapters[0]?.id ?? "");
+  const [query, setQuery] = useState("");
+  const normalizedQuery = query.trim().toLowerCase();
+  const activeChapter = chapters.find((chapter) => chapter.id === activeId) ?? chapters[0];
+  const visibleChapters = normalizedQuery
+    ? chapters.filter((chapter) =>
+        [chapter.title, ...chapter.body.flatMap((section) => [section.heading ?? "", ...(section.paragraphs ?? []), ...(section.bullets ?? [])])]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery),
+      )
+    : activeChapter
+      ? [activeChapter]
+      : [];
+
+  return (
+    <div className="help-layer" role="dialog" aria-modal="true" aria-label="Hilfe und Bedienungsanleitung">
+      <div className="help-backdrop" onClick={onClose} />
+      <aside className="help-panel">
+        <header className="help-head">
+          <div>
+            <p className="eyebrow">Hilfe</p>
+            <h2>Bedienungsanleitung</h2>
+          </div>
+          <button type="button" onClick={onClose}>Schließen</button>
+        </header>
+
+        <div className="help-ai-signal">
+          <strong>Ohne KI nutzbar</strong>
+          <span>Berichte, Tabellen, Vorschau und Datensicherung funktionieren auch ohne API-Key.</span>
+        </div>
+
+        <label className="help-search">
+          <span>Hilfe durchsuchen</span>
+          <input value={query} placeholder="Suchbegriff eingeben..." onChange={(event) => setQuery(event.target.value)} />
+        </label>
+
+        <div className="help-body">
+          <nav className="help-nav" aria-label="Hilfekapitel">
+            {chapters.map((chapter) => (
+              <button
+                key={chapter.id}
+                type="button"
+                className={!normalizedQuery && chapter.id === activeChapter?.id ? "active" : ""}
+                onClick={() => {
+                  setActiveId(chapter.id);
+                  setQuery("");
+                }}
+              >
+                {chapter.title}
+              </button>
+            ))}
+          </nav>
+
+          <div className="help-content">
+            {visibleChapters.length === 0 && <p className="help-empty">Keine passenden Hilfeinhalte gefunden.</p>}
+            {visibleChapters.map((chapter) => (
+              <article key={chapter.id} className="help-chapter">
+                <h3>{chapter.title}</h3>
+                {chapter.body.map((section, index) => (
+                  <section key={`${chapter.id}-${index}`}>
+                    {section.heading && <h4>{section.heading}</h4>}
+                    {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    {section.bullets && (
+                      <ul>
+                        {section.bullets.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    )}
+                  </section>
+                ))}
+              </article>
+            ))}
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }

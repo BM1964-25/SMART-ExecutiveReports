@@ -15,8 +15,6 @@ import {
 import {
   AlertCircle,
   Bot,
-  ChevronsLeft,
-  ChevronsRight,
   CheckCircle2,
   Copy,
   Download,
@@ -26,6 +24,8 @@ import {
   FileText,
   KeyRound,
   Loader2,
+  PanelLeftClose,
+  PanelLeftOpen,
   Plug,
   Plus,
   Printer,
@@ -531,9 +531,6 @@ function App() {
               <strong>{APP_NAME}</strong>
             </div>
           </div>
-          <button className="collapse-button" title={sidebarCollapsed ? "Sidebar ausklappen" : "Sidebar einklappen"} onClick={() => setSidebarCollapsed((value) => !value)}>
-            {sidebarCollapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
-          </button>
         </div>
         <nav>
           <button className={view === "dashboard" ? "active" : ""} onClick={() => setView("dashboard")}>
@@ -549,6 +546,21 @@ function App() {
             <KeyRound size={18} /> <span>API-Schlüssel</span>
           </button>
         </nav>
+        <div className="sidebar-bottom">
+          <button
+            className="collapse-button"
+            title={sidebarCollapsed ? "Sidebar ausklappen" : "Sidebar einklappen"}
+            aria-label={sidebarCollapsed ? "Sidebar ausklappen" : "Sidebar einklappen"}
+            onClick={() => setSidebarCollapsed((value) => !value)}
+          >
+            {sidebarCollapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+            {!sidebarCollapsed && <span>Einklappen</span>}
+          </button>
+          <div className="sidebar-info">
+            <span>Systemstatus</span>
+            <strong>Bereit</strong>
+          </div>
+        </div>
       </aside>
 
       <div className="app-frame">
